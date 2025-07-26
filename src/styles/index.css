@@ -1,0 +1,250 @@
+/* src/styles/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos globais para o corpo e o contêiner do jogo */
+body {
+    font-family: 'medievalBody', sans-serif; /* Usando a nova fonte medieval */
+    background-color: #1a202c; /* Fundo escuro existente */
+    background-image: url('https://placehold.co/1920x1080/2E2B23/5C4A3A?text=Medieval+Texture'); /* Textura sutil de fundo */
+    background-size: cover;
+    background-blend-mode: multiply; /* Mistura a cor de fundo com a imagem */
+    color: theme('colors.medieval-parchment'); /* Cor de texto tipo pergaminho */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Evita barras de rolagem */
+}
+
+.game-container {
+    width: 98vw;
+    height: 98vh;
+    background-color: theme('colors.medieval-dark'); /* Fundo mais escuro e profundo */
+    border-radius: 1rem;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra mais pronunciada e interna */
+    border: 3px solid theme('colors.medieval-steel'); /* Borda de aço */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative; /* Essencial para que os filhos absolutos se posicionem corretamente */
+}
+
+/* Estilos para o menu principal e tela de tutorial/jogo */
+.main-menu, .tutorial-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* REMOVIDOS: justify-content e align-items para não centralizar o conteúdo e permitir que elementos absolutos se alinhem às bordas */
+    padding: 0; /* REMOVIDO: padding para que os elementos absolutos se alinhem às bordas exatas */
+    background-image: url('https://placehold.co/1200x800/5C4A3A/2E2B23?text=Aged+Wood'); /* Fundo de madeira para menus */
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilos para botões gerais */
+.btn {
+    padding: 1rem 2.5rem; /* Aumentado para botões mais robustos */
+    background-color: theme('colors.medieval-brown'); /* Marrom de madeira */
+    color: theme('colors.medieval-parchment');
+    border-radius: 0.5rem; /* Levemente arredondado */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 0 theme('colors.medieval-dark'), 0 8px 15px rgba(0, 0, 0, 0.4); /* Sombra 3D */
+    border: 2px solid theme('colors.medieval-steel'); /* Borda de metal */
+    font-family: 'medievalTitle', serif; /* Fonte de título para botões */
+    font-size: 1.1rem;
+    text-transform: uppercase; /* Deixa o texto em maiúsculas */
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background-color: theme('colors.medieval-gray'); /* Cinza de pedra no hover */
+    transform: translateY(-3px); /* Efeito de elevação */
+    box-shadow: 0 9px 0 theme('colors.medieval-dark'), 0 12px 20px rgba(0, 0, 0, 0.5);
+}
+
+.btn:active {
+    transform: translateY(3px); /* Efeito de "pressionado" */
+    box-shadow: 0 2px 0 theme('colors.medieval-dark'), 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para o canvas do jogo */
+canvas {
+    background-color: theme('colors.medieval-green'); /* Fundo de mapa verde musgo */
+    border-radius: 0.75rem; /* Mais arredondado */
+    display: block;
+    border: 5px ridge theme('colors.medieval-steel'); /* Borda de metal envelhecido */
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra interna para profundidade */
+    
+    /* Posicionamento absoluto para centralizar e não afetar o fluxo */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Não defina largura/altura aqui, elas serão definidas pelo JS */
+}
+
+/* Barra de seleção de classe no menu principal */
+.class-selection-bar {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem; /* Aumentar o espaçamento */
+    padding: 1.5rem;
+    background-color: theme('colors.medieval-dark'); /* Fundo escuro */
+    border-top: 3px solid theme('colors.medieval-steel'); /* Borda de metal */
+    border-radius: 0.75rem; /* Arredondado para o uso no canto */
+    align-items: center;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3); /* Sombra interna */
+    position: absolute; /* Para posicionar na parte inferior */
+    bottom: 1rem; /* Mantenha a distância da borda inferior */
+    right: 1rem; /* Mantenha a distância da borda direita */
+    /* REMOVIDO: left: 50%; transform: translateX(-50%); - isso era para centralizar, mas queremos canto */
+    width: auto; /* Deixe a largura ser determinada pelo conteúdo */
+    max-width: 800px; /* Limite de largura */
+}
+
+.class-btn {
+    padding: 0.75rem 1.8rem;
+    background-color: theme('colors.medieval-gray'); /* Cinza de pedra */
+    color: theme('colors.medieval-parchment');
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    font-weight: bold;
+    font-family: 'medievalBody', serif;
+    border: 1px solid theme('colors.medieval-steel');
+    box-shadow: 0 3px 0 theme('colors.medieval-dark');
+}
+
+.class-btn:hover {
+    background-color: theme('colors.medieval-steel'); /* Aço no hover */
+    transform: translateY(-1px);
+}
+
+.class-btn.active {
+    background-color: theme('colors.medieval-gold'); /* Ouro para classe ativa */
+    color: theme('colors.medieval-dark');
+    border: 2px solid theme('colors.medieval-red'); /* Borda vermelha para destaque */
+    box-shadow: 0 5px 0 theme('colors.medieval-red');
+    transform: translateY(-2px);
+}
+
+/* Contêiner da UI do jogo */
+.game-ui-container {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* REMOVIDOS: align-items e justify-content aqui também, pois o canvas é absoluto e não se beneficia deles */
+    padding: 1rem; /* Adicionado padding para dar espaço ao redor da área do jogo */
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* O fundo será o do game-container */
+}
+
+/* Textos de feedback de combate (flutuantes) */
+.combat-text {
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.4rem; /* Um pouco maior */
+    pointer-events: none;
+    animation: floatUpFadeOut 1.2s forwards; /* Animação mais longa */
+    white-space: nowrap;
+    transform: translate(-50%, 0);
+    font-family: 'medievalTitle', serif; /* Fonte de título para feedback */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para destaque */
+}
+
+.damage-text { color: theme('colors.medieval-red'); } /* Vermelho escuro */
+.block-text { color: theme('colors.medieval-steel'); } /* Aço */
+.parry-text { color: theme('colors.medieval-gold'); } /* Ouro */
+.pickup-text { color: theme('colors.medieval-green'); } /* Verde musgo */
+.throwing-text { color: theme('colors.medieval-gold'); } /* Ouro */
+.combo-text { color: theme('colors.medieval-gold'); } /* Ouro para combo */
+.arrow-count-text { color: theme('colors.medieval-gray'); font-size: 1.1rem; } /* Cinza para contagem de flechas */
+
+@keyframes floatUpFadeOut {
+    0% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -50px); } /* Flutua para cima */
+}
+
+/* Modal de Confirmação */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Fundo mais escuro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: theme('colors.medieval-brown'); /* Marrom de madeira */
+    padding: 2.5rem;
+    border-radius: 1.5rem; /* Mais arredondado */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border: 3px solid theme('colors.medieval-steel'); /* Borda de metal */
+    font-family: 'medievalBody', serif;
+    color: theme('colors.medieval-parchment');
+    font-size: 1.1rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+/* Barra de Arremesso */
+.throwing-bar-container {
+    position: absolute;
+    width: 180px; /* Um pouco mais largo */
+    height: 20px; /* Um pouco mais alto */
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    overflow: hidden;
+    display: none;
+    transform: translate(-50%, 0);
+    border: 2px solid theme('colors.medieval-steel'); /* Borda de metal */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.throwing-bar {
+    height: 100%;
+    background-color: theme('colors.medieval-gold'); /* Ouro para a barra */
+    width: 0%;
+    transition: none;
+}
+
+.throwing-text-label {
+    position: absolute;
+    top: -25px; /* Acima da barra */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    font-weight: bold;
+    color: theme('colors.medieval-gold');
+    white-space: nowrap;
+    font-family: 'medievalTitle', serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
